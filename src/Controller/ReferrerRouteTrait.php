@@ -2,7 +2,8 @@
 
 namespace WHSymfony\Controller;
 
-use Symfony\Component\HttpFoundation\{Request,RequestMatcherInterface};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 
 /**
