@@ -3,7 +3,7 @@
 namespace WHSymfony\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\Exception\ExceptionInterface;
 
 /**
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Exception\ExceptionInterface;
  */
 trait ReferrerRouteTrait
 {
-	protected function getReferrerRoute(Request $request, RouterInterface $router): ?string
+	protected function getReferrerRoute(Request $request, RequestMatcherInterface $matcher): ?string
 	{
 		$referrer = $request->headers->get('referer');
 
@@ -22,10 +22,9 @@ trait ReferrerRouteTrait
 		}
 
 		$requestFromReferrer = Request::create($referrer);
-		$pathInfoForReferrer = $requestFromReferrer->getPathInfo();
 
 		try {
-			$routeInfoForReferrer = $router->match($pathInfoForReferrer);
+			$routeInfoForReferrer = $matcher->matchRequest($requestFromReferrer);
 		} catch( ExceptionInterface $e ) {
 			return null;
 		}
